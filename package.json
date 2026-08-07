@@ -1,0 +1,15 @@
+{
+  "name": "new-api-wechat-mini-program",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "release:check": "bun run typecheck && bun test && bun scripts/release-check.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.19",
+    "miniprogram-api-typings": "^5.0.0",
+    "typescript": "^5.9.2"
+  }
+}

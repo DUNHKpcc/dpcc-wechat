@@ -1,0 +1,55 @@
+:host {
+  position: fixed !important;
+  z-index: 1000;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: calc(118rpx + env(safe-area-inset-bottom));
+  transform: translateZ(0);
+}
+
+.tab-shell {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  height: 100%;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1rpx solid #ded8cf;
+  background: #faf9f5;
+  box-shadow: 0 -1rpx 0 rgba(20, 20, 19, 0.04);
+}
+
+.tab-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c6a64;
+}
+
+.tab-item.is-selected {
+  color: #cc785c;
+}
+
+.tab-item.is-selected::before {
+  position: absolute;
+  top: -1rpx;
+  right: 36rpx;
+  left: 36rpx;
+  height: 4rpx;
+  background: #cc785c;
+  content: "";
+}
+
+.tab-label {
+  font-size: 27rpx;
+  font-weight: 600;
+  line-height: 1;
+}

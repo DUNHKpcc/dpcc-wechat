@@ -1,0 +1,13 @@
+<view class="tab-shell">
+  <view
+    wx:for="{{items}}"
+    wx:key="path"
+    class="tab-item {{selected === index ? 'is-selected' : ''}}"
+    data-index="{{index}}"
+    bindtap="onSelect"
+    role="button"
+    aria-label="{{item.label}}"
+  >
+    <text class="tab-label">{{item.label}}</text>
+  </view>
+</view>

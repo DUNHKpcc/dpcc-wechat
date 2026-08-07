@@ -1,0 +1,272 @@
+.keys-header {
+  padding-bottom: 32rpx;
+}
+
+.header-line {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.add-button {
+  margin: 0 0 4rpx 24rpx;
+}
+
+.error-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 84rpx;
+  padding: 16rpx 32rpx;
+  border-bottom: 1rpx solid #e0c0b8;
+  background: #f5e7e2;
+  color: #8f342f;
+  font-size: 23rpx;
+}
+
+.error-action {
+  margin: 0;
+  padding: 0 12rpx;
+  background: transparent;
+  color: #8f342f;
+  font-size: 23rpx;
+  font-weight: 600;
+}
+
+.key-row {
+  padding: 32rpx;
+  border-bottom: 1rpx solid #e2dcd3;
+}
+
+.key-topline,
+.key-name-line,
+.key-meta,
+.key-actions {
+  display: flex;
+  align-items: center;
+}
+
+.key-topline {
+  justify-content: space-between;
+}
+
+.key-name-line {
+  flex: 1;
+  min-width: 0;
+}
+
+.key-status {
+  flex: 0 0 12rpx;
+  width: 12rpx;
+  height: 12rpx;
+  margin-right: 14rpx;
+  background: #6c6a64;
+}
+
+.key-status.is-active {
+  background: #3e7d50;
+}
+
+.key-name {
+  overflow: hidden;
+  font-size: 28rpx;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.key-state {
+  margin-left: 18rpx;
+  color: #6c6a64;
+  font-size: 21rpx;
+}
+
+.key-code {
+  overflow: hidden;
+  margin-top: 18rpx;
+  padding: 18rpx 20rpx;
+  background: #efe9de;
+  color: #3d3d3a;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 22rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.key-meta {
+  justify-content: space-between;
+  margin-top: 18rpx;
+  color: #6c6a64;
+  font-size: 21rpx;
+}
+
+.key-actions {
+  margin-top: 24rpx;
+  border-top: 1rpx solid #e2dcd3;
+}
+
+.key-action {
+  flex: 1;
+  height: 72rpx;
+  margin: 0;
+  padding: 0;
+  border-right: 1rpx solid #e2dcd3;
+  background: transparent;
+  color: #252523;
+  font-size: 23rpx;
+  font-weight: 600;
+  line-height: 72rpx;
+}
+
+.key-action:last-child {
+  border-right: 0;
+}
+
+.key-action.is-danger {
+  color: #b33e3e;
+}
+
+.modal-backdrop {
+  position: fixed;
+  z-index: 300;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  background: rgba(20, 20, 19, 0.55);
+}
+
+.sheet {
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: #faf9f5;
+}
+
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 124rpx;
+  padding: 24rpx 32rpx;
+  border-bottom: 1rpx solid #e2dcd3;
+}
+
+.sheet-eyebrow {
+  color: #6c6a64;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 18rpx;
+}
+
+.sheet-title {
+  margin-top: 8rpx;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 38rpx;
+}
+
+.sheet-close {
+  width: 70rpx;
+  height: 70rpx;
+  margin: 0;
+  padding: 0;
+  border: 1rpx solid #e2dcd3;
+  background: transparent;
+  color: #141413;
+  font-size: 38rpx;
+  line-height: 68rpx;
+}
+
+.sheet-body {
+  padding: 32rpx;
+}
+
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 104rpx;
+  border-top: 1rpx solid #e2dcd3;
+  border-bottom: 1rpx solid #e2dcd3;
+}
+
+.switch-title {
+  font-size: 25rpx;
+  font-weight: 600;
+}
+
+.switch-caption {
+  margin-top: 7rpx;
+  color: #6c6a64;
+  font-size: 20rpx;
+}
+
+.square-switch {
+  position: relative;
+  width: 78rpx;
+  height: 42rpx;
+  margin-left: 24rpx;
+  border: 1rpx solid #8e8b82;
+  background: #e8e0d2;
+}
+
+.switch-knob {
+  position: absolute;
+  top: 5rpx;
+  left: 5rpx;
+  width: 30rpx;
+  height: 30rpx;
+  background: #6c6a64;
+}
+
+.square-switch.is-on {
+  border-color: #141413;
+  background: #141413;
+}
+
+.square-switch.is-on .switch-knob {
+  right: 5rpx;
+  left: auto;
+  background: #faf9f5;
+}
+
+.sheet-error {
+  margin-top: 22rpx;
+  color: #b33e3e;
+  font-size: 22rpx;
+}
+
+.create-submit {
+  margin-top: 30rpx;
+}
+
+.reveal-sheet {
+  background: #181715;
+  color: #faf9f5;
+}
+
+.reveal-sheet .sheet-header {
+  border-bottom-color: #35322e;
+}
+
+.reveal-sheet .sheet-eyebrow {
+  color: #a09d96;
+}
+
+.reveal-sheet .sheet-close {
+  border-color: #4b4843;
+  color: #faf9f5;
+}
+
+.revealed-key {
+  overflow-wrap: anywhere;
+  padding: 24rpx;
+  border: 1rpx solid #4b4843;
+  background: #252320;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 25rpx;
+  line-height: 1.6;
+  user-select: text;
+}

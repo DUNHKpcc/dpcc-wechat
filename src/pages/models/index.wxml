@@ -1,0 +1,94 @@
+<scroll-view
+  class="page-shell page-scroll"
+  scroll-y
+  enhanced
+  show-scrollbar="{{false}}"
+  refresher-enabled="{{true}}"
+  refresher-triggered="{{refreshing}}"
+  bindrefresherrefresh="onPullDownRefresh"
+>
+  <view class="page-header models-header" style="padding-top: {{headerInset}}px;">
+    <view class="page-eyebrow">MODEL CATALOG</view>
+    <view class="page-title">可用模型</view>
+    <view class="page-subtitle">DPCC API 公开模型目录与计费信息</view>
+  </view>
+
+  <view class="account-entry">
+    <text class="account-entry-label">个人账户</text>
+    <button class="account-entry-action" bindtap="onOpenAccount">登录查看</button>
+  </view>
+
+  <view class="search-band">
+    <view class="search-symbol">⌕</view>
+    <input
+      class="search-input"
+      value="{{keyword}}"
+      placeholder="搜索模型、厂商或能力"
+      placeholder-class="search-placeholder"
+      confirm-type="search"
+      bindinput="onSearch"
+    />
+    <text class="search-count">{{resultCount}}</text>
+  </view>
+
+  <scroll-view class="vendor-tabs" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="vendor-tabs-inner">
+      <view
+        wx:for="{{vendors}}"
+        wx:key="*this"
+        class="vendor-tab {{selectedVendor === item ? 'is-selected' : ''}}"
+        data-vendor="{{item}}"
+        bindtap="onSelectVendor"
+      >
+        {{item}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="error-band" wx:if="{{errorMessage}}">
+    <text>{{errorMessage}}</text>
+    <button class="error-action" bindtap="onRetry">重试</button>
+  </view>
+
+  <view class="models-list" wx:if="{{!loading && models.length}}">
+    <view class="model-row" wx:for="{{models}}" wx:key="name">
+      <view class="model-icon-slot">
+        <image
+          class="model-icon"
+          src="{{item.iconPath}}"
+          mode="aspectFit"
+          aria-label="{{item.vendor}} logo"
+        />
+      </view>
+      <view class="model-body">
+        <view class="model-topline">
+          <text class="model-name">{{item.name}}</text>
+          <text class="model-vendor">{{item.vendor}}</text>
+        </view>
+        <view class="model-description">{{item.description}}</view>
+        <view class="model-data">
+          <view>
+            <text class="data-label">计费</text>
+            <text class="data-value">{{item.price}}</text>
+          </view>
+          <view class="context-data">
+            <text class="data-label">上下文</text>
+            <text class="data-value">{{item.context}}</text>
+          </view>
+        </view>
+        <view class="tag-line" wx:if="{{item.tags.length}}">
+          <text class="model-tag" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:elif="{{loading}}">
+    <view class="loading-line"></view>
+    <view class="loading-line is-short"></view>
+    <view class="loading-line"></view>
+    <view class="loading-line is-short"></view>
+  </view>
+
+  <view class="empty-state" wx:else>没有找到匹配的模型</view>
+</scroll-view>

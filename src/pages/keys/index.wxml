@@ -1,0 +1,112 @@
+<scroll-view
+  class="page-shell page-scroll"
+  scroll-y
+  enhanced
+  show-scrollbar="{{false}}"
+  refresher-enabled="{{true}}"
+  refresher-triggered="{{refreshing}}"
+  bindrefresherrefresh="onPullDownRefresh"
+>
+  <view class="page-header keys-header" style="padding-top: {{headerInset}}px;">
+    <view class="header-line">
+      <view>
+        <view class="page-eyebrow">CREDENTIALS · {{total}}</view>
+        <view class="page-title">API 密钥</view>
+      </view>
+      <button class="icon-button add-button" bindtap="onOpenCreate" aria-label="创建密钥">＋</button>
+    </view>
+    <view class="page-subtitle">完整密钥仅在主动查看后短暂显示</view>
+  </view>
+
+  <view class="error-band" wx:if="{{errorMessage && !createOpen}}">
+    <text>{{errorMessage}}</text>
+    <button class="error-action" bindtap="onRetry">重试</button>
+  </view>
+
+  <view class="keys-list" wx:if="{{!loading && keys.length}}">
+    <view class="key-row" wx:for="{{keys}}" wx:key="id">
+      <view class="key-topline">
+        <view class="key-name-line">
+          <view class="key-status {{item.statusClass}}"></view>
+          <text class="key-name">{{item.name}}</text>
+        </view>
+        <text class="key-state">{{item.statusLabel}}</text>
+      </view>
+      <view class="key-code">{{item.maskedKey}}</view>
+      <view class="key-meta">
+        <text>{{item.quota}}</text>
+        <text>{{item.expiry}}</text>
+      </view>
+      <view class="key-actions">
+        <button class="key-action" data-id="{{item.id}}" bindtap="onReveal">查看</button>
+        <button
+          class="key-action"
+          data-id="{{item.id}}"
+          data-status="{{item.status}}"
+          bindtap="onToggleStatus"
+        >
+          {{item.status === 1 ? '停用' : '启用'}}
+        </button>
+        <button class="key-action is-danger" data-id="{{item.id}}" bindtap="onDelete">删除</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:elif="{{loading}}">
+    <view class="loading-line"></view>
+    <view class="loading-line is-short"></view>
+    <view class="loading-line"></view>
+    <view class="loading-line is-short"></view>
+  </view>
+
+  <view class="empty-state" wx:else>还没有 API 密钥</view>
+</scroll-view>
+
+<view class="modal-backdrop" wx:if="{{createOpen}}" bindtap="onCloseCreate">
+  <view class="sheet" catchtap="noop">
+    <view class="sheet-header">
+      <view>
+        <view class="sheet-eyebrow">NEW CREDENTIAL</view>
+        <view class="sheet-title">创建密钥</view>
+      </view>
+      <button class="sheet-close" bindtap="onCloseCreate" aria-label="关闭">×</button>
+    </view>
+    <view class="sheet-body">
+      <view class="field">
+        <text class="field-label">名称</text>
+        <input class="field-input" value="{{formName}}" maxlength="32" placeholder="例如 production-app" bindinput="onFormName" />
+      </view>
+      <view class="field" wx:if="{{!formUnlimited}}">
+        <text class="field-label">可用额度（美元）</text>
+        <input class="field-input" value="{{formQuota}}" type="digit" placeholder="10" bindinput="onFormQuota" />
+      </view>
+      <view class="switch-row" bindtap="onToggleUnlimited" role="switch" aria-checked="{{formUnlimited}}">
+        <view>
+          <view class="switch-title">不限额度</view>
+          <view class="switch-caption">使用账户可用额度，不设置密钥上限</view>
+        </view>
+        <view class="square-switch {{formUnlimited ? 'is-on' : ''}}">
+          <view class="switch-knob"></view>
+        </view>
+      </view>
+      <view class="sheet-error" wx:if="{{errorMessage}}">{{errorMessage}}</view>
+      <button class="button-primary create-submit" loading="{{submitting}}" disabled="{{submitting}}" bindtap="onCreate">创建密钥</button>
+    </view>
+  </view>
+</view>
+
+<view class="modal-backdrop" wx:if="{{revealOpen}}">
+  <view class="sheet reveal-sheet">
+    <view class="sheet-header">
+      <view>
+        <view class="sheet-eyebrow">VISIBLE FOR 60 SECONDS</view>
+        <view class="sheet-title">{{revealedName}}</view>
+      </view>
+      <button class="sheet-close" bindtap="clearRevealedKey" aria-label="关闭">×</button>
+    </view>
+    <view class="sheet-body">
+      <view class="revealed-key">{{revealedKey}}</view>
+      <button class="button-primary create-submit" bindtap="onCopyKey">复制密钥</button>
+    </view>
+  </view>
+</view>

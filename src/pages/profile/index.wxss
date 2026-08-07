@@ -1,0 +1,130 @@
+.profile-masthead {
+  padding: 0 32rpx 40rpx;
+  background: #181715;
+  color: #faf9f5;
+}
+
+.profile-eyebrow {
+  padding-top: 38rpx;
+  color: #a09d96;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 20rpx;
+}
+
+.profile-name {
+  margin-top: 18rpx;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 58rpx;
+  line-height: 1.18;
+}
+
+.profile-id {
+  margin-top: 18rpx;
+  color: #c7c2ba;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 21rpx;
+}
+
+.error-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 84rpx;
+  padding: 16rpx 32rpx;
+  border-bottom: 1rpx solid #e0c0b8;
+  background: #f5e7e2;
+  color: #8f342f;
+  font-size: 23rpx;
+}
+
+.error-action {
+  margin: 0;
+  padding: 0 12rpx;
+  background: transparent;
+  color: #8f342f;
+  font-size: 23rpx;
+  font-weight: 600;
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1rpx solid #e2dcd3;
+}
+
+.account-cell {
+  min-width: 0;
+  padding: 32rpx;
+}
+
+.account-cell + .account-cell {
+  border-left: 1rpx solid #e2dcd3;
+}
+
+.account-label,
+.account-value {
+  display: block;
+}
+
+.account-label {
+  color: #6c6a64;
+  font-size: 21rpx;
+  font-weight: 600;
+}
+
+.account-value {
+  overflow: hidden;
+  margin-top: 16rpx;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 42rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-section {
+  padding-bottom: 18rpx;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 94rpx;
+  border-top: 1rpx solid #e2dcd3;
+}
+
+.info-label {
+  color: #6c6a64;
+  font-size: 23rpx;
+}
+
+.info-value {
+  max-width: 430rpx;
+  overflow: hidden;
+  font-size: 24rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.verified-line {
+  display: flex;
+  align-items: center;
+}
+
+.verified-dot {
+  width: 11rpx;
+  height: 11rpx;
+  margin-right: 12rpx;
+  background: #3e7d50;
+}
+
+.logout-section {
+  border-bottom: 0;
+}
+
+.logout-note {
+  margin-top: 18rpx;
+  color: #8e8b82;
+  font-size: 21rpx;
+  text-align: center;
+}

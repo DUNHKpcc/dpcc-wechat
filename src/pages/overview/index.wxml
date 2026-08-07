@@ -1,0 +1,210 @@
+<scroll-view
+  class="page-shell page-scroll"
+  scroll-y
+  enhanced
+  show-scrollbar="{{false}}"
+  refresher-enabled="{{true}}"
+  refresher-triggered="{{refreshing}}"
+  bindrefresherrefresh="onPullDownRefresh"
+>
+  <view class="page-header" style="padding-top: {{headerInset}}px;">
+    <view class="overview-brand">
+      <image
+        class="overview-brand-logo"
+        src="/assets/dpcc-logo.png"
+        mode="aspectFit"
+        aria-label="DPCC API"
+      />
+      <view class="page-eyebrow overview-brand-copy">
+        <text>DPCC API</text>
+        <text class="brand-divider">·</text>
+        <view class="group-label">
+          <text class="group-icon">◆</text>
+          <text>{{display.group || 'ACCOUNT'}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="page-title">你好，{{display.displayName || '开发者'}}</view>
+    <view class="page-subtitle">账户状态与最近用量</view>
+  </view>
+
+  <view class="error-band" wx:if="{{errorMessage}}">
+    <text>{{errorMessage}}</text>
+    <button class="error-action" bindtap="onRetry">重试</button>
+  </view>
+
+  <block wx:if="{{loading}}">
+    <view class="section">
+      <view class="loading-line"></view>
+      <view class="loading-line is-short"></view>
+    </view>
+    <view class="section">
+      <view class="loading-line"></view>
+      <view class="loading-line"></view>
+      <view class="loading-line is-short"></view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="quota-band">
+      <view class="quota-label">账户余额</view>
+      <view class="quota-value">{{display.walletQuota}}</view>
+      <view
+        class="quota-progress"
+        role="progressbar"
+        aria-label="已用 {{display.walletUsedPercent}}%，剩余 {{display.walletRemainingPercent}}%"
+      >
+        <view
+          class="quota-progress-used"
+          style="width: {{display.walletUsedPercent}}%;"
+        ></view>
+        <view
+          class="quota-progress-remaining"
+          style="width: {{display.walletRemainingPercent}}%;"
+        ></view>
+      </view>
+      <view class="quota-footer">
+        <text>已用 {{display.usedQuota}} · {{display.walletUsedPercent}}%</text>
+        <text>剩余 {{display.walletQuota}} · {{display.walletRemainingPercent}}%</text>
+      </view>
+    </view>
+
+    <view class="section subscription-section">
+      <view class="section-heading">
+        <text class="section-title">当前订阅</text>
+        <text class="section-meta">最近到期 {{display.nearestExpiry}}</text>
+      </view>
+      <view wx:if="{{display.subscriptions.length}}">
+        <view class="subscription-item" wx:for="{{display.subscriptions}}" wx:key="id">
+          <view class="subscription-summary">
+            <view class="subscription-title">
+              <view class="status-dot"></view>
+              <view class="row-main">
+                <view class="row-title">{{item.title}}</view>
+                <view class="row-caption">{{item.expiry}} 到期</view>
+              </view>
+            </view>
+            <view class="subscription-value">
+              <text class="subscription-amount">{{item.remainingQuota}}</text>
+              <text class="subscription-unit">剩余</text>
+            </view>
+          </view>
+          <view
+            class="subscription-progress"
+            role="progressbar"
+            aria-label="已用 {{item.usedPercent}}%，剩余 {{item.remainingPercent}}%"
+          >
+            <view
+              class="subscription-progress-used"
+              style="width: {{item.usedPercent}}%;"
+            ></view>
+            <view
+              class="subscription-progress-remaining"
+              style="width: {{item.remainingPercent}}%;"
+            ></view>
+          </view>
+          <view class="subscription-progress-footer">
+            <text>已用 {{item.usedQuota}} · {{item.usedPercent}}%</text>
+            <text>剩余 {{item.remainingQuota}} · {{item.remainingPercent}}%</text>
+          </view>
+        </view>
+      </view>
+      <view class="empty-state" wx:else>暂无有效订阅，账户余额仍可独立使用。</view>
+    </view>
+
+    <view class="activity-section">
+      <view class="activity-heading">
+        <text class="section-title">Token 活动</text>
+        <view class="activity-tabs" role="tablist">
+          <view
+            class="activity-tab {{activityMode === item.key ? 'is-selected' : ''}}"
+            wx:for="{{activityModes}}"
+            wx:key="key"
+            data-mode="{{item.key}}"
+            bindtap="onSelectActivityMode"
+            role="tab"
+            aria-selected="{{activityMode === item.key}}"
+          >
+            {{item.label}}
+          </view>
+        </view>
+      </view>
+
+      <scroll-view
+        class="activity-scroll"
+        scroll-x
+        enhanced
+        show-scrollbar="{{false}}"
+        scroll-into-view="activity-week-52"
+      >
+        <view class="activity-canvas">
+          <view class="activity-grid">
+            <view
+              id="activity-week-{{week.index}}"
+              class="activity-week"
+              wx:for="{{activityWeeks}}"
+              wx:key="index"
+              wx:for-item="week"
+            >
+              <view
+                class="activity-cell level-{{cell.level}} {{cell.future ? 'is-future' : ''}}"
+                wx:for="{{week.cells}}"
+                wx:key="timestamp"
+                wx:for-item="cell"
+                aria-label="{{cell.dateLabel}}，{{cell.tokens}} Token"
+              ></view>
+            </view>
+          </view>
+
+          <view class="activity-months">
+            <text
+              class="activity-month"
+              wx:for="{{activityMonths}}"
+              wx:key="key"
+              style="left: {{item.left}}%;"
+            >
+              {{item.label}}
+            </text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="usage-section">
+      <view class="usage-heading">
+        <text class="section-title">用量摘要</text>
+        <text class="section-meta">{{display.usageLabel}}</text>
+      </view>
+      <view class="usage-grid">
+        <view class="usage-cell">
+          <text class="usage-label">Token 总量</text>
+          <text class="usage-value">{{display.totalTokens}}</text>
+        </view>
+        <view class="usage-cell">
+          <text class="usage-label">请求次数</text>
+          <text class="usage-value">{{display.requestCount}}</text>
+        </view>
+      </view>
+      <view class="top-model-row">
+        <text class="usage-label">最常用模型 · TOP 3</text>
+        <view
+          class="top-model-line"
+          wx:for="{{display.topModels}}"
+          wx:key="name"
+        >
+          <text class="top-model-rank">{{item.rank}}</text>
+          <image
+            class="top-model-icon"
+            src="{{item.iconPath}}"
+            mode="aspectFit"
+            aria-label="{{item.name}} logo"
+          />
+          <text class="top-model-value">{{item.name}}</text>
+          <text class="top-model-tokens">{{item.tokens}} Token</text>
+        </view>
+        <view class="top-model-empty" wx:if="{{!display.topModels.length}}">暂无模型用量</view>
+      </view>
+    </view>
+
+  </block>
+</scroll-view>

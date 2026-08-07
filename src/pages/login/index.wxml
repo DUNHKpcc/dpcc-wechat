@@ -1,0 +1,60 @@
+<view class="login-page">
+  <view class="login-masthead" style="padding-top: {{headerInset}}px;">
+    <view class="brand-line">
+      <image
+        class="brand-logo"
+        src="/assets/dpcc-logo.png"
+        mode="aspectFit"
+        aria-label="DPCC API"
+      />
+      <text class="brand-name">DPCC API</text>
+    </view>
+    <view class="masthead-copy">
+      <text class="masthead-eyebrow">WECHAT MINI PROGRAM</text>
+      <text class="masthead-title">你的模型用量，清楚可见。</text>
+      <text class="masthead-body">额度、订阅、模型与密钥，在一个安静的工作台里。</text>
+    </view>
+  </view>
+
+  <view class="login-panel" wx:if="{{!loading}}">
+    <view class="login-heading">登录账户</view>
+    <view class="login-caption">使用微信身份验证并进入已绑定的 DPCC API 账户。</view>
+
+    <view class="consent-row">
+      <view
+        class="checkbox {{agreed ? 'is-checked' : ''}}"
+        bindtap="onToggleConsent"
+        role="checkbox"
+        aria-checked="{{agreed}}"
+        aria-label="同意用户协议与隐私政策"
+      >
+        <text wx:if="{{agreed}}">✓</text>
+      </view>
+      <view class="consent-copy">
+        <text bindtap="onToggleConsent">我已阅读并同意</text>
+        <text class="consent-link" catchtap="onOpenUserAgreement">《用户服务协议》</text>
+        <text>与</text>
+        <text class="consent-link" catchtap="onOpenPrivacyPolicy">《隐私政策》</text>
+      </view>
+    </view>
+
+    <button
+      class="button-primary login-button"
+      hover-class="button-hover"
+      disabled="{{!agreed || submitting}}"
+      loading="{{submitting}}"
+      open-type="agreePrivacyAuthorization"
+      bindtap="onLoginTap"
+      bindagreeprivacyauthorization="onAgreePrivacyAuthorization"
+    >
+      同意并微信登录
+    </button>
+    <view class="error-message" wx:if="{{errorMessage}}">{{errorMessage}}</view>
+    <view class="security-note">协议版本 2026-07-26 · Access Token 不写入本地存储</view>
+  </view>
+
+  <view class="login-panel" wx:else>
+    <view class="loading-line"></view>
+    <view class="loading-line is-short"></view>
+  </view>
+</view>

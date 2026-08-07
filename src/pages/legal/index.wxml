@@ -1,0 +1,256 @@
+<view class="legal-page">
+  <view class="legal-header">
+    <text class="legal-eyebrow">DPCC API · LEGAL</text>
+    <text class="legal-title">{{title}}</text>
+    <view class="legal-meta">
+      <text>版本 {{version}}</text>
+      <text>生效日期 {{effectiveDate}}</text>
+    </view>
+  </view>
+
+  <block wx:if="{{type === 'privacy'}}">
+    <view class="important-notice">
+      <text class="notice-title">登录前请特别阅读</text>
+      <text class="notice-copy">
+        为完成微信登录并展示您的 DPCC API 账户，我们会处理微信登录临时凭证、OpenID 或 UnionID、账户资料与使用记录。未勾选同意前，小程序不会调用 wx.login，也不会向服务器发送上述登录信息。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">01</view>
+      <text class="section-title">运营者与适用范围</text>
+      <text class="paragraph">
+        本隐私政策适用于 DPCC API 微信小程序。个人信息处理者及小程序运营者为 DPCC GAMING，联系邮箱为 sjh2329952249@163.com，联系地址为辽宁省大连市。
+      </text>
+      <text class="paragraph">
+        我们遵循合法、正当、必要和诚信原则，只处理实现微信登录、账户查询、额度与订阅展示、用量统计、模型浏览和 API 密钥管理所必要的信息。
+      </text>
+      <text class="paragraph">
+        您无需登录即可浏览公开模型目录与计费信息。只有当您主动选择个人账户、额度、订阅或密钥等账户功能时，才会进入登录页面并由您自行决定是否授权登录。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">02</view>
+      <text class="section-title">我们收集的信息、方式与用途</text>
+
+      <view class="data-item">
+        <text class="data-name">微信登录临时凭证</text>
+        <text class="data-detail">收集方式：仅在您勾选同意并点击“同意并微信登录”后，通过 wx.login 获取一次性 code，并经 HTTPS 发送至 api.dpccgaming.xyz。</text>
+        <text class="data-detail">使用目的：调用微信 code2Session 完成身份校验。该临时 code 使用后即失效，不在小程序本地持久保存。</text>
+      </view>
+
+      <view class="data-item">
+        <text class="data-name">OpenID 或 UnionID</text>
+        <text class="data-detail">收集方式：由服务端使用一次性 code 向微信接口换取，小程序前端不直接读取或保存。</text>
+        <text class="data-detail">使用目的：识别微信用户、查找或绑定对应的 DPCC API 账户、防止会话冒用。是否使用 UnionID 取决于微信开放平台配置及其是否可用。</text>
+      </view>
+
+      <view class="data-item">
+        <text class="data-name">账户资料与服务数据</text>
+        <text class="data-detail">信息范围：用户 ID、用户名、显示名称、您已设置的邮箱、用户分组、账户额度、累计用量、订阅、请求与 Token 统计、常用模型、任务记录、可用模型及 API 密钥记录。</text>
+        <text class="data-detail">收集方式与用途：登录成功后从您的 DPCC API 账户按需查询，用于在小程序中展示和管理上述信息。完整 API 密钥只在您主动点击查看后短暂显示，并在离开页面或 60 秒后从页面内存清除。</text>
+      </view>
+
+      <view class="data-item">
+        <text class="data-name">网络与安全日志</text>
+        <text class="data-detail">信息范围：IP 地址、请求时间、请求标识、客户端 User-Agent、登录和退出结果。</text>
+        <text class="data-detail">使用目的：防止滥用、限制异常请求、排查故障、保护账户和服务安全。日志不会记录微信临时 code、完整 Mini Session、Access Token、Refresh Cookie 或完整 API 密钥。</text>
+      </view>
+
+      <view class="data-item">
+        <text class="data-name">本地设备信息</text>
+        <text class="data-detail">小程序会读取状态栏高度、窗口尺寸和右上角菜单位置，仅用于为不同机型预留安全区域和排版。这些布局信息不上传服务器，也不用于识别或画像。</text>
+      </view>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">03</view>
+      <text class="section-title">本地存储与登录会话</text>
+      <text class="paragraph">
+        小程序本地仅持久保存随机安装标识和 BFF 签发的可撤销 Mini Session。随机安装标识用于区分当前安装，不包含微信昵称、手机号等内容；Mini Session 用于恢复登录，最长有效期不超过 30 天。
+      </text>
+      <text class="paragraph">
+        new-api Access Token 只保存在小程序运行内存，进入后台时会清除，不写入本地存储。退出登录会删除 Mini Session；随机安装标识可通过清除小程序数据或卸载小程序删除。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">04</view>
+      <text class="section-title">我们不收集的信息</text>
+      <text class="paragraph">
+        当前版本不会申请或收集您的微信昵称、头像、手机号、通讯录、精确位置、相册、摄像头、麦克风、身份证件、银行卡或生物识别信息。未来如新增相关功能，我们会先更新告知并依法另行取得授权。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">05</view>
+      <text class="section-title">共享、委托处理与第三方服务</text>
+      <text class="paragraph">
+        微信登录需要将 AppID、一次性 code 等必要参数发送至深圳市腾讯计算机系统有限公司提供的微信接口，以获取 OpenID 或 UnionID。账户数据由 api.dpccgaming.xyz 对应的 DPCC API 服务处理。
+      </text>
+      <text class="paragraph">
+        本小程序的账户控制台不会主动把您的账户资料、密钥或用量记录发送给模型提供商。您在其他客户端使用 API 发起模型请求时，相关请求内容可能按照对应模型服务规则转发给上游服务商，该处理不由本小程序页面直接发起。
+      </text>
+      <text class="paragraph">
+        除实现上述功能、履行法律义务或保护用户和服务安全所必需的情形外，我们不会出售个人信息，也不会向无关第三方提供个人信息。如未来向境外提供个人信息，我们将另行告知并依法取得单独同意。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">06</view>
+      <text class="section-title">保存期限与安全措施</text>
+      <text class="paragraph">
+        微信临时 code 仅用于当次登录；Mini Session 最长保存 30 天；账户资料在账户存续期间按提供服务所必需的期限保存；调用、计费和安全日志在完成计费核验、故障排查、安全审计及法定义务所需的最短期限内保存。超过必要期限后，我们会删除、匿名化或依法处理。
+      </text>
+      <text class="paragraph">
+        我们采用 HTTPS、访问控制、会话哈希、AES-256-GCM 加密、限流和安全审计等措施保护信息。任何互联网服务都无法保证绝对安全，请勿向他人泄露 API 密钥或登录凭证。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">07</view>
+      <text class="section-title">您的权利与撤回同意</text>
+      <text class="paragraph">
+        您可以在“我的”页面查看部分账户资料，可以管理或删除 API 密钥，也可以退出登录以撤销当前 Mini Session。您还可以通过联系邮箱申请查阅、更正、复制或删除个人信息，申请注销账户，撤回同意，或对个人信息处理提出投诉。
+      </text>
+      <text class="paragraph">
+        撤回同意不影响撤回前基于同意进行的处理。微信身份验证属于登录和识别已绑定账户所必需的处理；撤回后，我们将无法继续向您提供需要登录的账户功能。我们将在核验您的账户身份后及时处理相关请求。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">08</view>
+      <text class="section-title">未成年人保护与政策更新</text>
+      <text class="paragraph">
+        本服务主要面向具备相应民事行为能力的用户。未成年人应在监护人阅读并同意本政策后使用。若发现未经监护人同意处理了不满十四周岁未成年人的信息，我们将依法删除或采取必要措施。
+      </text>
+      <text class="paragraph">
+        处理目的、方式或信息种类发生实质变化时，我们会更新政策并重新取得同意。您可以随时从登录页再次查看当前版本。
+      </text>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="important-notice">
+      <text class="notice-title">请在使用服务前完整阅读</text>
+      <text class="notice-copy">
+        点击同意并登录，表示您已阅读并接受本协议及《隐私政策》。如不同意，请勿登录或继续使用需要账户身份的功能。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">01</view>
+      <text class="section-title">协议主体与服务范围</text>
+      <text class="paragraph">
+        本协议由您与 DPCC GAMING 就使用 DPCC API 微信小程序订立。联系邮箱：sjh2329952249@163.com；联系地址：辽宁省大连市。
+      </text>
+      <text class="paragraph">
+        本小程序提供 DPCC API 账户登录、额度与订阅查询、Token 用量统计、模型浏览、任务记录查看和 API 密钥管理。当前小程序不提供充值或支付功能。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">02</view>
+      <text class="section-title">账户登录与使用资格</text>
+      <text class="paragraph">
+        您应使用本人有权使用的微信账号完成身份验证，并确保对应 DPCC API 账户资料真实、准确、有效。您不得冒用他人身份、转让登录会话或绕过身份验证。
+      </text>
+      <text class="paragraph">
+        如微信身份尚未绑定现有账户，是否允许创建新账户取决于 DPCC API 当时的注册配置。因身份口径不同导致无法匹配时，请停止重复注册并通过联系邮箱处理。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">03</view>
+      <text class="section-title">API 密钥与账户安全</text>
+      <text class="paragraph">
+        API 密钥具有账户调用权限。您应妥善保管，不得公开、出售、出租或向无权人员提供。发现泄露、异常调用或额度变化时，应立即停用或删除相关密钥并联系我们。
+      </text>
+      <text class="paragraph">
+        因您主动泄露密钥、登录凭证或将账户交由他人使用造成的损失，由责任方依法承担。平台发现异常风险时，可以要求重新验证、暂停会话或限制相关操作。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">04</view>
+      <text class="section-title">使用规范</text>
+      <text class="paragraph">您不得利用本服务从事以下行为：</text>
+      <view class="rule-list">
+        <text>· 违反法律法规、监管要求或社会公共利益；</text>
+        <text>· 侵害他人知识产权、隐私权、商业秘密或其他合法权益；</text>
+        <text>· 探测、攻击、干扰平台、接口、账户或安全措施；</text>
+        <text>· 批量注册、欺诈、盗刷、转售额度或规避限流与计费；</text>
+        <text>· 提交无权处理的个人信息、敏感信息或违法内容。</text>
+      </view>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">05</view>
+      <text class="section-title">第三方模型与服务</text>
+      <text class="paragraph">
+        DPCC API 可能连接第三方模型、云服务或上游 API。模型可用性、响应内容、速度和能力受第三方服务状态及其规则影响。您应自行判断模型输出，不应将其直接作为医疗、法律、金融或其他高风险事项的唯一依据。
+      </text>
+      <text class="paragraph">
+        第三方服务发生变更、中断、限流或停止时，我们可以调整模型目录和可用范围，并尽合理努力提供状态说明。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">06</view>
+      <text class="section-title">额度、订阅与记录</text>
+      <text class="paragraph">
+        小程序展示的额度、用量、订阅和请求记录来自 DPCC API 账户数据。因网络延迟或异步结算，页面数据可能短暂滞后，最终以服务端完成结算后的记录为准。
+      </text>
+      <text class="paragraph">
+        当前小程序不直接处理支付。涉及订阅购买、退款、发票或其他交易事项时，以提供该交易功能的网页、平台规则及订单记录为准。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">07</view>
+      <text class="section-title">隐私与数据保护</text>
+      <text class="paragraph">
+        我们按照《隐私政策》处理微信登录凭证、OpenID 或 UnionID、账户资料、使用记录及安全日志。您在同意前可以独立打开并完整阅读隐私政策；未取得同意前，小程序不会发起微信登录。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">08</view>
+      <text class="section-title">服务变更、中止与终止</text>
+      <text class="paragraph">
+        为维护安全、修复故障、遵守法律或应对第三方服务变化，我们可以进行维护、升级或临时限制部分功能。对严重违反本协议、危害服务安全或侵害他人权益的账户，可以采取限制、暂停或终止服务等措施。
+      </text>
+      <text class="paragraph">
+        您可以随时退出登录并停止使用小程序。账户注销、数据删除或争议处理可通过联系邮箱提出。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">09</view>
+      <text class="section-title">知识产权、责任与争议处理</text>
+      <text class="paragraph">
+        小程序界面、标识、文档和程序的相关权利归其合法权利人所有。未经许可，不得复制、反向利用或用于误导性宣传。
+      </text>
+      <text class="paragraph">
+        我们将在法律允许范围内保障服务稳定，但不对不可抗力、网络基础设施故障、微信或上游模型服务中断造成的必然影响承担超出法定范围的责任。本协议适用中华人民共和国法律；发生争议时，双方应先友好协商。
+      </text>
+    </view>
+
+    <view class="legal-section">
+      <view class="section-index">10</view>
+      <text class="section-title">协议更新与联系</text>
+      <text class="paragraph">
+        协议发生实质变化时，我们会通过页面提示并重新取得同意。您可以随时从登录页查看当前版本。如对本协议有疑问、投诉或建议，请联系 sjh2329952249@163.com。
+      </text>
+    </view>
+  </block>
+
+  <view class="legal-footer">
+    <image class="footer-logo" src="/assets/dpcc-logo.png" mode="aspectFit" />
+    <view>
+      <text class="footer-brand">DPCC API</text>
+      <text class="footer-contact">sjh2329952249@163.com</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,84 @@
+<scroll-view
+  class="page-shell page-scroll"
+  scroll-y
+  enhanced
+  show-scrollbar="{{false}}"
+  refresher-enabled="{{true}}"
+  refresher-triggered="{{refreshing}}"
+  bindrefresherrefresh="onPullDownRefresh"
+>
+  <view class="profile-masthead" style="padding-top: {{headerInset}}px;">
+    <view class="profile-eyebrow">ACCOUNT</view>
+    <view class="profile-name">{{displayName || '我的账户'}}</view>
+    <view class="profile-id" wx:if="{{user}}">ID {{user.id}} · {{user.group}}</view>
+  </view>
+
+  <view class="error-band" wx:if="{{errorMessage}}">
+    <text>{{errorMessage}}</text>
+    <button class="error-action" bindtap="onRetry">重试</button>
+  </view>
+
+  <block wx:if="{{loading}}">
+    <view class="section">
+      <view class="loading-line"></view>
+      <view class="loading-line is-short"></view>
+      <view class="loading-line"></view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="account-grid">
+      <view class="account-cell">
+        <text class="account-label">账户余额</text>
+        <text class="account-value">{{walletQuota}}</text>
+      </view>
+      <view class="account-cell">
+        <text class="account-label">累计已用</text>
+        <text class="account-value">{{usedQuota}}</text>
+      </view>
+    </view>
+
+    <view class="section profile-section">
+      <view class="section-heading">
+        <text class="section-title">账户资料</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">用户名</text>
+        <text class="info-value">{{user.username}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">邮箱</text>
+        <text class="info-value">{{user.email || '未设置'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">登录身份</text>
+        <view class="verified-line">
+          <view class="verified-dot"></view>
+          <text class="info-value">{{authIdentity}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section profile-section">
+      <view class="section-heading">
+        <text class="section-title">订阅</text>
+        <text class="section-meta">{{subscriptions.length}} 个有效</text>
+      </view>
+      <view wx:if="{{subscriptions.length}}">
+        <view class="list-row" wx:for="{{subscriptions}}" wx:key="id">
+          <view class="row-main">
+            <view class="row-title">{{item.title}}</view>
+            <view class="row-caption">{{item.expiry}} 到期</view>
+          </view>
+          <view class="row-value">{{item.remaining}}</view>
+        </view>
+      </view>
+      <view class="empty-state" wx:else>暂无有效订阅</view>
+    </view>
+
+    <view class="section logout-section">
+      <button class="button-danger" bindtap="onLogout">退出登录</button>
+      <view class="logout-note">退出将清除当前运行内存中的登录凭证。</view>
+    </view>
+  </block>
+</scroll-view>

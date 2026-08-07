@@ -1,0 +1,132 @@
+.login-page {
+  min-height: 100vh;
+  background: #faf9f5;
+}
+
+.login-masthead {
+  min-height: 54vh;
+  padding: 0 40rpx 56rpx;
+  background: #181715;
+  color: #faf9f5;
+}
+
+.brand-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120rpx;
+  border-bottom: 1rpx solid #35322e;
+}
+
+.brand-logo {
+  width: 76rpx;
+  height: 76rpx;
+  margin-right: 24rpx;
+}
+
+.brand-name {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.masthead-copy {
+  padding-top: 76rpx;
+}
+
+.masthead-eyebrow {
+  display: block;
+  color: #a09d96;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 20rpx;
+}
+
+.masthead-title {
+  display: block;
+  max-width: 620rpx;
+  margin-top: 24rpx;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 64rpx;
+  font-weight: 400;
+  line-height: 1.16;
+}
+
+.masthead-body {
+  display: block;
+  max-width: 590rpx;
+  margin-top: 28rpx;
+  color: #c7c2ba;
+  font-size: 26rpx;
+  line-height: 1.7;
+}
+
+.login-panel {
+  padding: 48rpx 40rpx calc(48rpx + env(safe-area-inset-bottom));
+}
+
+.login-heading {
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.login-caption {
+  margin-top: 12rpx;
+  color: #6c6a64;
+  font-size: 25rpx;
+  line-height: 1.55;
+}
+
+.consent-row {
+  display: flex;
+  align-items: center;
+  min-height: 92rpx;
+  margin-top: 30rpx;
+  border-top: 2rpx solid #141413;
+  border-bottom: 1rpx solid #e2dcd3;
+}
+
+.checkbox {
+  display: flex;
+  flex: 0 0 34rpx;
+  align-items: center;
+  justify-content: center;
+  width: 34rpx;
+  height: 34rpx;
+  margin-right: 18rpx;
+  border: 1rpx solid #6c6a64;
+  color: #ffffff;
+  font-size: 22rpx;
+}
+
+.checkbox.is-checked {
+  border-color: #141413;
+  background: #141413;
+}
+
+.consent-copy {
+  flex: 1;
+  color: #3d3d3a;
+  font-size: 23rpx;
+  line-height: 1.7;
+}
+
+.consent-link {
+  color: #a9583e;
+}
+
+.login-button {
+  margin-top: 32rpx;
+}
+
+.error-message {
+  margin-top: 20rpx;
+  color: #b33e3e;
+  font-size: 23rpx;
+}
+
+.security-note {
+  margin-top: 24rpx;
+  color: #8e8b82;
+  font-size: 21rpx;
+  line-height: 1.55;
+}

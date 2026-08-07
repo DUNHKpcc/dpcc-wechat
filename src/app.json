@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/models/index",
+    "pages/overview/index",
+    "pages/keys/index",
+    "pages/profile/index",
+    "pages/login/index",
+    "pages/legal/index"
+  ],
+  "__usePrivacyCheck__": true,
+  "window": {
+    "navigationStyle": "custom",
+    "backgroundColor": "#faf9f5",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#6c6a64",
+    "selectedColor": "#cc785c",
+    "backgroundColor": "#faf9f5",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/overview/index",
+        "text": "概览"
+      },
+      {
+        "pagePath": "pages/models/index",
+        "text": "模型"
+      },
+      {
+        "pagePath": "pages/keys/index",
+        "text": "密钥"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
