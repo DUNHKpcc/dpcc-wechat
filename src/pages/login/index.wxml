@@ -5,20 +5,20 @@
         class="brand-logo"
         src="/assets/dpcc-logo.png"
         mode="aspectFit"
-        aria-label="DPCC API"
+        aria-label="个人用量工具"
       />
-      <text class="brand-name">DPCC API</text>
+      <text class="brand-name">个人用量工具</text>
     </view>
     <view class="masthead-copy">
-      <text class="masthead-eyebrow">WECHAT MINI PROGRAM</text>
-      <text class="masthead-title">你的模型用量，清楚可见。</text>
-      <text class="masthead-body">额度、订阅、模型与密钥，在一个安静的工作台里。</text>
+      <text class="masthead-eyebrow">PERSONAL TOOL</text>
+      <text class="masthead-title">你的用量，清楚可见。</text>
+      <text class="masthead-body">查看额度、订阅、模型与密钥。</text>
     </view>
   </view>
 
   <view class="login-panel" wx:if="{{!loading}}">
-    <view class="login-heading">登录账户</view>
-    <view class="login-caption">使用微信身份验证并进入已绑定的 DPCC API 账户。</view>
+    <view class="login-heading">登录后使用</view>
+    <view class="login-caption">先浏览公开内容，需要账户功能时再登录。</view>
 
     <view class="consent-row">
       <view
@@ -47,7 +47,7 @@
       bindtap="onLoginTap"
       bindagreeprivacyauthorization="onAgreePrivacyAuthorization"
     >
-      同意并微信登录
+      微信登录
     </button>
     <view class="error-message" wx:if="{{errorMessage}}">{{errorMessage}}</view>
     <view class="security-note">协议版本 2026-07-26 · Access Token 不写入本地存储</view>

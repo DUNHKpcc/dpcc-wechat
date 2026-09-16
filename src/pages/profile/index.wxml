@@ -8,7 +8,7 @@
   bindrefresherrefresh="onPullDownRefresh"
 >
   <view class="profile-masthead" style="padding-top: {{headerInset}}px;">
-    <view class="profile-eyebrow">ACCOUNT</view>
+    <view class="profile-eyebrow">PERSONAL TOOL</view>
     <view class="profile-name">{{displayName || '我的账户'}}</view>
     <view class="profile-id" wx:if="{{user}}">ID {{user.id}} · {{user.group}}</view>
   </view>

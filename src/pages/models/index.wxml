@@ -10,12 +10,12 @@
   <view class="page-header models-header" style="padding-top: {{headerInset}}px;">
     <view class="page-eyebrow">MODEL CATALOG</view>
     <view class="page-title">可用模型</view>
-    <view class="page-subtitle">DPCC API 公开模型目录与计费信息</view>
+    <view class="page-subtitle">公开模型目录与计费信息</view>
   </view>
 
   <view class="account-entry">
-    <text class="account-entry-label">个人账户</text>
-    <button class="account-entry-action" bindtap="onOpenAccount">登录查看</button>
+    <text class="account-entry-label">个人数据</text>
+    <button class="account-entry-action" bindtap="onOpenAccount">登录后查看</button>
   </view>
 
   <view class="search-band">

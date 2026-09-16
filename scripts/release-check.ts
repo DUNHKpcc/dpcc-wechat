@@ -86,7 +86,20 @@ if (
 }
 
 const project = JSON.parse(read('project.config.json')) as {
+  projectname?: string
+  description?: string
   setting?: { urlCheck?: boolean; uploadWithSourceMap?: boolean }
+}
+const forbiddenMetadataWords = ['平台', '社区', '服务', '社交', '匹配']
+for (const [field, value] of Object.entries({
+  projectname: project.projectname,
+  description: project.description,
+})) {
+  for (const word of forbiddenMetadataWords) {
+    if (value?.includes(word)) {
+      failures.push(`项目${field}包含个人主体审核禁用词：${word}`)
+    }
+  }
 }
 if (project.setting?.urlCheck !== true) {
   failures.push('微信合法域名校验未开启')
@@ -106,12 +119,28 @@ if (app.pages?.[0] !== 'pages/models/index') {
   failures.push('小程序首页不是无需登录的公开模型目录')
 }
 
+const appScript = read('src/app.ts')
+if (/wx\.login|wx\.getUserProfile|wx\.getUserInfo/.test(appScript)) {
+  failures.push('小程序启动时仍主动请求登录或个人信息授权')
+}
+
 const modelsPage = read('src/pages/models/index.ts')
 if (
   !/getPublicModels/.test(modelsPage) ||
   /reLaunch\(\{\s*url:\s*['"]\/pages\/login\/index['"]/.test(modelsPage)
 ) {
   failures.push('公开模型目录仍会在浏览前强制登录')
+}
+
+const loginScript = read('src/pages/login/index.ts')
+if (!/agreed:\s*false/.test(loginScript)) {
+  failures.push('协议勾选框默认状态不是空白')
+}
+if (!/!agreed\s*\|\|\s*submitting/.test(loginPage)) {
+  failures.push('未勾选协议时登录按钮仍可提交')
+}
+if (/注册即代表同意/.test(source)) {
+  failures.push('仍存在注册即代表同意的协议文案')
 }
 
 if (failures.length) {

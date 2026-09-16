@@ -54,8 +54,8 @@ Page({
     this.setData({ submitting: true, errorMessage: '' })
     try {
       await loginWithWechat({
-        userAgreement: true,
-        privacyPolicy: true,
+        userAgreement: this.data.agreed,
+        privacyPolicy: this.data.agreed,
       })
       wx.switchTab({ url: '/pages/overview/index' })
     } catch (error) {

@@ -13,10 +13,10 @@
         class="overview-brand-logo"
         src="/assets/dpcc-logo.png"
         mode="aspectFit"
-        aria-label="DPCC API"
+        aria-label="个人用量工具"
       />
       <view class="page-eyebrow overview-brand-copy">
-        <text>DPCC API</text>
+        <text>个人用量工具</text>
         <text class="brand-divider">·</text>
         <view class="group-label">
           <text class="group-icon">◆</text>

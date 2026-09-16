@@ -2,8 +2,8 @@
   "appid": "wx9b5c619f8549e8b8",
   "compileType": "miniprogram",
   "miniprogramRoot": "src/",
-  "projectname": "new-api-wechat-mini-program",
-  "description": "new-api 微信小程序用户控制台",
+  "projectname": "个人用量工具",
+  "description": "个人查看额度、模型和密钥的工具",
   "setting": {
     "urlCheck": true,
     "es6": true,
@@ -36,5 +36,6 @@
     "ignore": [],
     "include": []
   },
-  "editorSetting": {}
+  "editorSetting": {},
+  "libVersion": "3.17.0"
 }
