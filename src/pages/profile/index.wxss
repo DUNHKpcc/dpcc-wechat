@@ -1,22 +1,22 @@
 .profile-masthead {
-  padding: 0 32rpx 40rpx;
+  padding: 0 32rpx 32rpx;
   border-bottom: 1rpx solid #e2dcd3;
   background: #faf9f5;
   color: #141413;
 }
 
 .profile-eyebrow {
-  padding-top: 38rpx;
   color: #6c6a64;
   font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 20rpx;
+  font-size: 22rpx;
+  font-weight: 600;
 }
 
 .profile-name {
-  margin-top: 18rpx;
+  margin-top: 10rpx;
   font-family: Georgia, "Songti SC", serif;
-  font-size: 58rpx;
-  line-height: 1.18;
+  font-size: 54rpx;
+  line-height: 1.15;
 }
 
 .profile-id {
