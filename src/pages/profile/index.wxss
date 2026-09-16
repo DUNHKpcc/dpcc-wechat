@@ -1,12 +1,13 @@
 .profile-masthead {
   padding: 0 32rpx 40rpx;
-  background: #181715;
-  color: #faf9f5;
+  border-bottom: 1rpx solid #e2dcd3;
+  background: #faf9f5;
+  color: #141413;
 }
 
 .profile-eyebrow {
   padding-top: 38rpx;
-  color: #a09d96;
+  color: #6c6a64;
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 20rpx;
 }
@@ -20,7 +21,7 @@
 
 .profile-id {
   margin-top: 18rpx;
-  color: #c7c2ba;
+  color: #6c6a64;
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 21rpx;
 }
