@@ -1,4 +1,5 @@
 import { runtimeConfig } from '../config/runtime'
+import { getModelContextLength } from '../constants/model-context'
 import type {
   ApiKey,
   ApiKeyFormData,
@@ -156,7 +157,8 @@ function toAvailableModel(
     modelRatio: price?.model_ratio ?? null,
     completionRatio: price?.completion_ratio ?? null,
     modelPrice: price?.model_price ?? null,
-    contextLength: price?.context_length,
+    // Context capacities are presented from the local catalog, not from pricing.
+    contextLength: getModelContextLength(name),
     tags: price?.tags
       ? price.tags
           .split(',')
