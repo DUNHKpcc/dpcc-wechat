@@ -1,6 +1,13 @@
 <view class="login-page">
   <view class="login-masthead" style="padding-top: {{headerInset}}px;">
     <view class="brand-line">
+      <button
+        class="login-back"
+        bindtap="onBack"
+        aria-label="返回上一页"
+      >
+        ←
+      </button>
       <image
         class="brand-logo"
         src="/assets/dpcc-logo.png"

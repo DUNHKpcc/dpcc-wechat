@@ -19,6 +19,14 @@ Page({
     this.setData({ loading: false })
   },
 
+  onBack() {
+    if (getCurrentPages().length > 1) {
+      wx.navigateBack({ delta: 1 })
+      return
+    }
+    wx.switchTab({ url: '/pages/overview/index' })
+  },
+
   onToggleConsent() {
     this.setData({ agreed: !this.data.agreed, errorMessage: '' })
   },
