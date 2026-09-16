@@ -4,11 +4,14 @@ import type { UserProfile } from '../../types/api'
 import { formatDate, formatQuota } from '../../utils/format'
 import { buildSubscriptionViews } from '../../utils/metrics'
 import { getHeaderInset } from '../../utils/navigation'
+import { ApiError } from '../../services/transport'
 
 Page({
   data: {
     headerInset: getHeaderInset(),
-    loading: true,
+    loading: false,
+    guest: true,
+    checkingAccess: false,
     refreshing: false,
     errorMessage: '',
     user: null as UserProfile | null,
@@ -25,23 +28,53 @@ Page({
     }>,
   },
 
-  async onLoad() {
-    const authenticated = await ensureAuthenticated()
-    if (!authenticated) {
-      wx.reLaunch({ url: '/pages/login/index' })
-      return
-    }
-    await this.loadData()
+  onLoad() {
+    void this.loadForCurrentSession()
   },
 
   onShow() {
     const tabBar = this.getTabBar?.()
     if (tabBar) tabBar.setData({ selected: 3 })
+    if (!this.data.checkingAccess) void this.loadForCurrentSession()
+  },
+
+  async loadForCurrentSession() {
+    this.setData({ checkingAccess: true })
+    const authenticated = await ensureAuthenticated()
+    if (!authenticated) {
+      this.showGuestState()
+      return
+    }
+
+    const wasGuest = this.data.guest
+    this.setData({ guest: false, checkingAccess: false })
+    if (wasGuest) await this.loadData()
   },
 
   async onPullDownRefresh() {
+    if (this.data.guest) {
+      wx.stopPullDownRefresh()
+      return
+    }
     await this.loadData(true)
     wx.stopPullDownRefresh()
+  },
+
+  showGuestState() {
+    this.setData({
+      guest: true,
+      checkingAccess: false,
+      loading: false,
+      refreshing: false,
+      errorMessage: '',
+      user: null,
+      displayName: '',
+      authIdentity: '',
+      logoutMessage: '',
+      walletQuota: '--',
+      usedQuota: '--',
+      subscriptions: [],
+    })
   },
 
   async loadData(refreshing = false) {
@@ -79,6 +112,10 @@ Page({
         })),
       })
     } catch (error) {
+      if (error instanceof ApiError && error.statusCode === 401) {
+        this.showGuestState()
+        return
+      }
       this.setData({
         loading: false,
         refreshing: false,
@@ -97,12 +134,17 @@ Page({
       success: async (result) => {
         if (!result.confirm) return
         await logout()
-        wx.reLaunch({ url: '/pages/login/index' })
+        this.showGuestState()
+        wx.switchTab({ url: '/pages/models/index' })
       },
     })
   },
 
   onRetry() {
-    void this.loadData()
+    void this.loadForCurrentSession()
+  },
+
+  onOpenLogin() {
+    wx.navigateTo({ url: '/pages/login/index' })
   },
 })

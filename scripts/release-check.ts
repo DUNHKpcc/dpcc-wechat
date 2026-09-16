@@ -132,6 +132,37 @@ if (
   failures.push('公开模型目录仍会在浏览前强制登录')
 }
 
+for (const page of ['overview', 'keys', 'profile']) {
+  const pageScript = read(`src/pages/${page}/index.ts`)
+  const pageTemplate = read(`src/pages/${page}/index.wxml`)
+  if (/reLaunch\(\{\s*url:\s*['"]\/pages\/login\/index['"]/.test(pageScript)) {
+    failures.push(`${page} 页面仍会向游客自动跳转登录页`)
+  }
+  if (!/guest:\s*true/.test(pageScript) || !/onOpenLogin/.test(pageScript)) {
+    failures.push(`${page} 页面缺少游客可见状态或主动登录入口`)
+  }
+  if (!/wx:if="\{\{guest\}\}"/.test(pageTemplate)) {
+    failures.push(`${page} 页面未渲染游客可见内容`)
+  }
+  if (!pageTemplate.includes('登录后查看')) {
+    failures.push(`${page} 页面未标明个人数据需登录后查看`)
+  }
+}
+
+const requiredGuestContent: Record<string, string[]> = {
+  overview: ['账户余额', '当前订阅', 'Token 活动', '用量摘要'],
+  keys: ['API 密钥', '密钥名称', '查看', '启用', '删除'],
+  profile: ['账户余额', '账户资料', '订阅'],
+}
+for (const [page, labels] of Object.entries(requiredGuestContent)) {
+  const pageTemplate = read(`src/pages/${page}/index.wxml`)
+  for (const label of labels) {
+    if (!pageTemplate.includes(label)) {
+      failures.push(`${page} 游客页缺少可见内容：${label}`)
+    }
+  }
+}
+
 const loginScript = read('src/pages/login/index.ts')
 if (!/agreed:\s*false/.test(loginScript)) {
   failures.push('协议勾选框默认状态不是空白')

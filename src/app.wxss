@@ -242,6 +242,37 @@ button::after {
   text-align: center;
 }
 
+.guest-state {
+  padding: 28rpx 32rpx 32rpx;
+  border-bottom: 1rpx solid var(--hairline);
+  background: var(--surface);
+}
+
+.guest-eyebrow {
+  color: var(--muted);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 20rpx;
+  font-weight: 600;
+}
+
+.guest-title {
+  margin-top: 8rpx;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 34rpx;
+  line-height: 1.2;
+}
+
+.guest-copy {
+  margin-top: 10rpx;
+  color: var(--body);
+  font-size: 25rpx;
+  line-height: 1.65;
+}
+
+.guest-action {
+  margin-top: 22rpx;
+}
+
 .loading-line {
   height: 24rpx;
   margin: 14rpx 0;

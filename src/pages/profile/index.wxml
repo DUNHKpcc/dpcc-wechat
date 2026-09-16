@@ -3,7 +3,7 @@
   scroll-y
   enhanced
   show-scrollbar="{{false}}"
-  refresher-enabled="{{true}}"
+  refresher-enabled="{{!guest}}"
   refresher-triggered="{{refreshing}}"
   bindrefresherrefresh="onPullDownRefresh"
 >
@@ -18,7 +18,59 @@
     <button class="error-action" bindtap="onRetry">重试</button>
   </view>
 
-  <block wx:if="{{loading}}">
+  <view class="guest-state" wx:if="{{guest}}">
+    <view class="guest-eyebrow">GUEST MODE</view>
+    <view class="guest-title">个人数据</view>
+    <view class="guest-copy">资料、余额和订阅信息已展示，登录后查看自己的数据。</view>
+    <button class="button-primary guest-action" bindtap="onOpenLogin">登录后查看</button>
+  </view>
+
+  <block wx:if="{{guest}}">
+    <view class="account-grid">
+      <view class="account-cell">
+        <text class="account-label">账户余额</text>
+        <text class="account-value">登录后查看</text>
+      </view>
+      <view class="account-cell">
+        <text class="account-label">累计已用</text>
+        <text class="account-value">登录后查看</text>
+      </view>
+    </view>
+
+    <view class="section profile-section">
+      <view class="section-heading">
+        <text class="section-title">账户资料</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">用户名</text>
+        <text class="info-value">登录后查看</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">邮箱</text>
+        <text class="info-value">登录后查看</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">登录身份</text>
+        <text class="info-value">登录后查看</text>
+      </view>
+    </view>
+
+    <view class="section profile-section">
+      <view class="section-heading">
+        <text class="section-title">订阅</text>
+        <text class="section-meta">登录后查看</text>
+      </view>
+      <view class="list-row">
+        <view class="row-main">
+          <view class="row-title">订阅信息</view>
+          <view class="row-caption">登录后查看到期时间与剩余额度</view>
+        </view>
+        <view class="row-value">登录后查看</view>
+      </view>
+    </view>
+  </block>
+
+  <block wx:elif="{{loading}}">
     <view class="section">
       <view class="loading-line"></view>
       <view class="loading-line is-short"></view>

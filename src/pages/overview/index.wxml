@@ -3,7 +3,7 @@
   scroll-y
   enhanced
   show-scrollbar="{{false}}"
-  refresher-enabled="{{true}}"
+  refresher-enabled="{{!guest}}"
   refresher-triggered="{{refreshing}}"
   bindrefresherrefresh="onPullDownRefresh"
 >
@@ -24,13 +24,21 @@
         </view>
       </view>
     </view>
-    <view class="page-title">你好，{{display.displayName || '开发者'}}</view>
+    <view class="page-title" wx:if="{{guest}}">账户概览</view>
+    <view class="page-title" wx:else>你好，{{display.displayName || '开发者'}}</view>
     <view class="page-subtitle">账户状态与最近用量</view>
   </view>
 
   <view class="error-band" wx:if="{{errorMessage}}">
     <text>{{errorMessage}}</text>
     <button class="error-action" bindtap="onRetry">重试</button>
+  </view>
+
+  <view class="guest-state" wx:if="{{guest}}">
+    <view class="guest-eyebrow">GUEST MODE</view>
+    <view class="guest-title">个人数据</view>
+    <view class="guest-copy">余额、订阅和用量已展示，登录后查看自己的数据。</view>
+    <button class="button-primary guest-action" bindtap="onOpenLogin">登录后查看</button>
   </view>
 
   <block wx:if="{{loading}}">
@@ -48,7 +56,7 @@
   <block wx:else>
     <view class="quota-band">
       <view class="quota-label">账户余额</view>
-      <view class="quota-value">{{display.walletQuota}}</view>
+      <view class="quota-value">{{guest ? '登录后查看' : display.walletQuota}}</view>
       <view
         class="quota-progress"
         role="progressbar"
@@ -64,17 +72,43 @@
         ></view>
       </view>
       <view class="quota-footer">
-        <text>已用 {{display.usedQuota}} · {{display.walletUsedPercent}}%</text>
-        <text>剩余 {{display.walletQuota}} · {{display.walletRemainingPercent}}%</text>
+        <text wx:if="{{guest}}">已用 登录后查看</text>
+        <text wx:else>已用 {{display.usedQuota}} · {{display.walletUsedPercent}}%</text>
+        <text wx:if="{{guest}}">剩余 登录后查看</text>
+        <text wx:else>剩余 {{display.walletQuota}} · {{display.walletRemainingPercent}}%</text>
       </view>
     </view>
 
     <view class="section subscription-section">
       <view class="section-heading">
         <text class="section-title">当前订阅</text>
-        <text class="section-meta">最近到期 {{display.nearestExpiry}}</text>
+        <text class="section-meta">{{guest ? '登录后查看' : '最近到期 ' + display.nearestExpiry}}</text>
       </view>
-      <view wx:if="{{display.subscriptions.length}}">
+      <view wx:if="{{guest}}">
+        <view class="subscription-item">
+          <view class="subscription-summary">
+            <view class="subscription-title">
+              <view class="status-dot is-off"></view>
+              <view class="row-main">
+                <view class="row-title">订阅信息</view>
+                <view class="row-caption">登录后查看到期时间与使用情况</view>
+              </view>
+            </view>
+            <view class="subscription-value">
+              <text class="subscription-amount">登录后查看</text>
+              <text class="subscription-unit">剩余</text>
+            </view>
+          </view>
+          <view class="subscription-progress">
+            <view class="subscription-progress-remaining" style="width: 100%;"></view>
+          </view>
+          <view class="subscription-progress-footer">
+            <text>已用 登录后查看</text>
+            <text>剩余 登录后查看</text>
+          </view>
+        </view>
+      </view>
+      <view wx:elif="{{display.subscriptions.length}}">
         <view class="subscription-item" wx:for="{{display.subscriptions}}" wx:key="id">
           <view class="subscription-summary">
             <view class="subscription-title">
@@ -129,6 +163,7 @@
           </view>
         </view>
       </view>
+      <view class="section-meta" wx:if="{{guest}}">登录后查看自己的 Token 活动</view>
 
       <scroll-view
         class="activity-scroll"
@@ -173,21 +208,23 @@
     <view class="usage-section">
       <view class="usage-heading">
         <text class="section-title">用量摘要</text>
-        <text class="section-meta">{{display.usageLabel}}</text>
+        <text class="section-meta">{{guest ? '登录后查看' : display.usageLabel}}</text>
       </view>
       <view class="usage-grid">
         <view class="usage-cell">
           <text class="usage-label">Token 总量</text>
-          <text class="usage-value">{{display.totalTokens}}</text>
+          <text class="usage-value">{{guest ? '登录后查看' : display.totalTokens}}</text>
         </view>
         <view class="usage-cell">
           <text class="usage-label">请求次数</text>
-          <text class="usage-value">{{display.requestCount}}</text>
+          <text class="usage-value">{{guest ? '登录后查看' : display.requestCount}}</text>
         </view>
       </view>
       <view class="top-model-row">
         <text class="usage-label">最常用模型 · TOP 3</text>
+        <view class="top-model-empty" wx:if="{{guest}}">登录后查看常用模型</view>
         <view
+          wx:if="{{!guest}}"
           class="top-model-line"
           wx:for="{{display.topModels}}"
           wx:key="name"
@@ -202,7 +239,7 @@
           <text class="top-model-value">{{item.name}}</text>
           <text class="top-model-tokens">{{item.tokens}} Token</text>
         </view>
-        <view class="top-model-empty" wx:if="{{!display.topModels.length}}">暂无模型用量</view>
+        <view class="top-model-empty" wx:if="{{!guest && !display.topModels.length}}">暂无模型用量</view>
       </view>
     </view>
 

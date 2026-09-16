@@ -9,6 +9,7 @@ import {
 import type { ApiKey, ApiKeyFormData } from '../../types/api'
 import { formatDate, formatQuota, maskKey } from '../../utils/format'
 import { getHeaderInset } from '../../utils/navigation'
+import { ApiError } from '../../services/transport'
 
 interface KeyDisplay {
   id: number
@@ -50,7 +51,9 @@ function toDisplay(key: ApiKey): KeyDisplay {
 Page({
   data: {
     headerInset: getHeaderInset(),
-    loading: true,
+    loading: false,
+    guest: true,
+    checkingAccess: false,
     refreshing: false,
     submitting: false,
     errorMessage: '',
@@ -65,18 +68,27 @@ Page({
     formUnlimited: false,
   },
 
-  async onLoad() {
-    const authenticated = await ensureAuthenticated()
-    if (!authenticated) {
-      wx.reLaunch({ url: '/pages/login/index' })
-      return
-    }
-    await this.loadData()
+  onLoad() {
+    void this.loadForCurrentSession()
   },
 
   onShow() {
     const tabBar = this.getTabBar?.()
     if (tabBar) tabBar.setData({ selected: 2 })
+    if (!this.data.checkingAccess) void this.loadForCurrentSession()
+  },
+
+  async loadForCurrentSession() {
+    this.setData({ checkingAccess: true })
+    const authenticated = await ensureAuthenticated()
+    if (!authenticated) {
+      this.showGuestState()
+      return
+    }
+
+    const wasGuest = this.data.guest
+    this.setData({ guest: false, checkingAccess: false })
+    if (wasGuest) await this.loadData()
   },
 
   onHide() {
@@ -88,8 +100,27 @@ Page({
   },
 
   async onPullDownRefresh() {
+    if (this.data.guest) {
+      wx.stopPullDownRefresh()
+      return
+    }
     await this.loadData(true)
     wx.stopPullDownRefresh()
+  },
+
+  showGuestState() {
+    sourceKeys = []
+    this.clearRevealedKey()
+    this.setData({
+      guest: true,
+      checkingAccess: false,
+      loading: false,
+      refreshing: false,
+      errorMessage: '',
+      keys: [],
+      total: 0,
+      createOpen: false,
+    })
   },
 
   async loadData(refreshing = false) {
@@ -108,6 +139,10 @@ Page({
         keys: sourceKeys.map(toDisplay),
       })
     } catch (error) {
+      if (error instanceof ApiError && error.statusCode === 401) {
+        this.showGuestState()
+        return
+      }
       this.setData({
         loading: false,
         refreshing: false,
@@ -118,6 +153,10 @@ Page({
   },
 
   onOpenCreate() {
+    if (this.data.guest) {
+      this.onOpenLogin()
+      return
+    }
     this.setData({
       createOpen: true,
       formName: '',
@@ -269,6 +308,10 @@ Page({
   },
 
   onRetry() {
-    void this.loadData()
+    void this.loadForCurrentSession()
+  },
+
+  onOpenLogin() {
+    wx.navigateTo({ url: '/pages/login/index' })
   },
 })

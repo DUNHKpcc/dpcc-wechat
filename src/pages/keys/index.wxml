@@ -3,14 +3,14 @@
   scroll-y
   enhanced
   show-scrollbar="{{false}}"
-  refresher-enabled="{{true}}"
+  refresher-enabled="{{!guest}}"
   refresher-triggered="{{refreshing}}"
   bindrefresherrefresh="onPullDownRefresh"
 >
   <view class="page-header keys-header" style="padding-top: {{headerInset}}px;">
     <view class="header-line">
       <view>
-        <view class="page-eyebrow">CREDENTIALS · {{total}}</view>
+        <view class="page-eyebrow">CREDENTIALS · {{guest ? '登录后查看' : total}}</view>
         <view class="page-title">API 密钥</view>
       </view>
       <button class="icon-button add-button" bindtap="onOpenCreate" aria-label="创建密钥">＋</button>
@@ -23,7 +23,36 @@
     <button class="error-action" bindtap="onRetry">重试</button>
   </view>
 
-  <view class="keys-list" wx:if="{{!loading && keys.length}}">
+  <view class="guest-state" wx:if="{{guest}}">
+    <view class="guest-eyebrow">GUEST MODE</view>
+    <view class="guest-title">密钥管理</view>
+    <view class="guest-copy">密钥列表和操作已展示，登录后查看自己的密钥。</view>
+    <button class="button-primary guest-action" bindtap="onOpenLogin">登录后查看</button>
+  </view>
+
+  <view class="keys-list" wx:if="{{guest}}">
+    <view class="key-row">
+      <view class="key-topline">
+        <view class="key-name-line">
+          <view class="key-status is-paused"></view>
+          <text class="key-name">密钥名称</text>
+        </view>
+        <text class="key-state">登录后查看</text>
+      </view>
+      <view class="key-code">sk-••••••••••••••••••••••••</view>
+      <view class="key-meta">
+        <text>可用额度 登录后查看</text>
+        <text>有效期 登录后查看</text>
+      </view>
+      <view class="key-actions">
+        <button class="key-action" bindtap="onOpenLogin">查看</button>
+        <button class="key-action" bindtap="onOpenLogin">启用</button>
+        <button class="key-action is-danger" bindtap="onOpenLogin">删除</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="keys-list" wx:elif="{{!loading && keys.length}}">
     <view class="key-row" wx:for="{{keys}}" wx:key="id">
       <view class="key-topline">
         <view class="key-name-line">

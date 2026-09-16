@@ -9,6 +9,7 @@ import { formatDate, formatInteger, formatQuota } from '../../utils/format'
 import { calculateQuotaSplit } from '../../utils/metrics'
 import { resolveModelIconPath } from '../../utils/model-icons'
 import { getHeaderInset } from '../../utils/navigation'
+import { ApiError } from '../../services/transport'
 
 interface OverviewDisplay {
   displayName: string
@@ -115,7 +116,9 @@ function toDisplay(snapshot: OverviewSnapshot): OverviewDisplay {
 Page({
   data: {
     headerInset: getHeaderInset(),
-    loading: true,
+    loading: false,
+    guest: true,
+    checkingAccess: false,
     refreshing: false,
     errorMessage: '',
     display: emptyDisplay,
@@ -125,23 +128,52 @@ Page({
     activityMonths: buildTokenActivityHeatmap([], 'daily').months,
   },
 
-  async onLoad() {
-    const authenticated = await ensureAuthenticated()
-    if (!authenticated) {
-      wx.reLaunch({ url: '/pages/login/index' })
-      return
-    }
-    await this.loadData()
+  onLoad() {
+    void this.loadForCurrentSession()
   },
 
   onShow() {
     const tabBar = this.getTabBar?.()
     if (tabBar) tabBar.setData({ selected: 0 })
+    if (!this.data.checkingAccess) void this.loadForCurrentSession()
+  },
+
+  async loadForCurrentSession() {
+    this.setData({ checkingAccess: true })
+    const authenticated = await ensureAuthenticated()
+    if (!authenticated) {
+      this.showGuestState()
+      return
+    }
+
+    const wasGuest = this.data.guest
+    this.setData({ guest: false, checkingAccess: false })
+    if (wasGuest) await this.loadData()
   },
 
   async onPullDownRefresh() {
+    if (this.data.guest) {
+      wx.stopPullDownRefresh()
+      return
+    }
     await this.loadData(true)
     wx.stopPullDownRefresh()
+  },
+
+  showGuestState() {
+    tokenActivityPoints = []
+    const activity = buildTokenActivityHeatmap([], 'daily')
+    this.setData({
+      guest: true,
+      checkingAccess: false,
+      loading: false,
+      refreshing: false,
+      errorMessage: '',
+      display: emptyDisplay,
+      activityMode: 'daily',
+      activityWeeks: activity.weeks,
+      activityMonths: activity.months,
+    })
   },
 
   async loadData(refreshing = false) {
@@ -165,6 +197,10 @@ Page({
         refreshing: false,
       })
     } catch (error) {
+      if (error instanceof ApiError && error.statusCode === 401) {
+        this.showGuestState()
+        return
+      }
       this.setData({
         loading: false,
         refreshing: false,
@@ -175,7 +211,11 @@ Page({
   },
 
   onRetry() {
-    void this.loadData()
+    void this.loadForCurrentSession()
+  },
+
+  onOpenLogin() {
+    wx.navigateTo({ url: '/pages/login/index' })
   },
 
   onSelectActivityMode(event: WechatMiniprogram.TouchEvent) {
